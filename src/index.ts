@@ -39,7 +39,7 @@ bot.on('message', async (ctx: Context) => {
     if (ctx.chat?.type === 'private' && !participants_id.includes(ctx.chat?.id as number)) return;
     if (ctx.chat?.type === 'group' && ctx.chat?.id !== parseInt(group_id)) return;
 
-    if (!msg.startsWith('!gpt') && ctx.message.reply_to_message?.from?.id !== get_me.id && !msg.includes(get_me.username)) return;
+    if (ctx.chat?.type !== 'private' && !msg.startsWith('!gpt') && ctx.message.reply_to_message?.from?.id !== get_me.id && !msg.includes(get_me.username)) return;
 
     let message = msg.replace('!gpt', '').replace('@' + get_me.username, 'ChatGPT').trim();
 
