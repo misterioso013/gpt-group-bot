@@ -51,7 +51,11 @@ bot.on('message', async (ctx: Context) => {
         message = `Previous message:\n${ctx.message.reply_to_message.text} from ${name}\n\nCurrent message for you:\n${message}`;
     }
 
-    const send = await ctx.reply('Thinking...', {reply_to_message_id: ctx.message.message_id});
+    const send = await ctx.reply('Thinking...', {
+        reply_to_message_id: ctx.message.message_id,
+        parse_mode: 'Markdown'
+    });
+
     console.log(send.message_id);
     const participants_list = process.env.PARTICIPANTS?.replace(/'/g, '"') as string;
     const participants = JSON.parse(participants_list) as string[];
@@ -72,7 +76,7 @@ bot.on('message', async (ctx: Context) => {
         }
     });
 
-    await ctx.telegram.editMessageText(ctx.chat?.id,send.message_id, undefined, res.text);
+    await ctx.telegram.editMessageText(ctx.chat?.id,send.message_id, undefined, res.text, {parse_mode: 'Markdown'});
     } catch (e: any) {
         await ctx.reply(`<b>Error:</b> <pre>${e.message}</pre>`, {parse_mode: 'HTML'});
     }
