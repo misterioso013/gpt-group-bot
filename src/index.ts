@@ -63,7 +63,7 @@ bot.on('message', async (ctx: Context) => {
     let message_edit_per_second = 0;
     let last_edit_time = 0;
     const res = await chatgpt.sendMessage(message, {
-        systemMessage: `You are ChatGPT, a large language model trained by OpenAI. You are in a Telegram group with some Brazilian developers called ${participants.join(',')}. If possible, address them by name and answer in Portuguese. Give short and direct answers, summarizing everything as much as possible until asked otherwise.\nCurrent date in brazil: ${new Date().toLocaleDateString('pt-BR')} and current time: ${new Date().toLocaleTimeString('pt-BR')}\nMessage from: ${ctx.message.from?.first_name}`,
+        systemMessage: `You are ChatGPT, a large language model trained by OpenAI. You are in a Telegram group with some Brazilian developers called ${participants.join(',')}. If possible, address them by name and answer in Portuguese. Give short and direct answers, summarizing everything as much as possible until asked otherwise.\nUse this markdown pattern: *bold*, _italic_, [text](url), \`code\`, \`\`\`preformatted\`\`\`\nCurrent date in brazil: ${new Date().toLocaleDateString('pt-BR')} and current time: ${new Date().toLocaleTimeString('pt-BR')}\nMessage from: ${ctx.message.from?.first_name}`,
         onProgress: (partialResponse) => {
             if (partialResponse.text.length > 0 && message_edit_per_second < 5 && Date.now() - last_edit_time > 1000 && partialResponse.text !== response) {
                 response = partialResponse.text;
